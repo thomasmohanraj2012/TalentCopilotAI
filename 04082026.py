@@ -11,39 +11,9 @@ st.set_page_config(
     layout="wide"
 )
 
-st.markdown("""
-<style>
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-html, body, [class*="css"] {
-    font-family: 'Poppins', sans-serif;
-}
-
-.main-header {
-    background: linear-gradient(
-        90deg,
-        #FF6A2B,
-        #FF3D72,
-        #FF00B8
-    );
-    padding: 25px;
-    border-radius: 15px;
-    text-align: center;
-    color: white;
-}
-
-</style>
-""", unsafe_allow_html=True)
-
-# st.title("🤖 TalentCopilot AI")
-
-st.markdown("""
-<div class="main-header">
-    <h1>🤖 TalentCopilot AI</h1>
-    <p>AI Powered Resume Screening & Interview Assistant</p>
-</div>
-""", unsafe_allow_html=True)
+st.title("🤖 TalentCopilot AI")
 
 st.markdown("---")
 
@@ -120,49 +90,71 @@ with tab1:
             with score_col2:
                 st.metric("Missing Skills", len(missing_skills))
                 st.metric("Recommendation", recommendation)
-            
+
+            # st.subheader("✅ Matched Skills")
+
+            # # for skill in matched_skills:
+            # #     st.markdown(f"✅ **{skill.upper()}**")
+
+            # st.subheader("✅ Matched Skills")
+
+            # skills_html = " ".join(
+            #     [
+            #         f"<span style='background:#d4edda;padding:6px 12px;border-radius:15px;margin:4px;display:inline-block;'>✅ {skill.upper()}</span>"
+            #         for skill in matched_skills
+            #     ]
+            # )
+
             st.subheader("✅ Matched Skills")
 
             skills_html = " ".join(
                 [
-                    f"<span style='background:#FF3D72;color:white;padding:8px 14px;border-radius:20px;font-weight:600;margin:4px;display:inline-block;'>✅ {skill.title()}</span>"
+                    f"<span style='background:#E8F5E9;color:#2E7D32;padding:8px 14px;border-radius:20px;font-weight:600;margin:4px;display:inline-block;'>✅ {skill.title()}</span>"
                     for skill in matched_skills
                 ]
             )
 
-            st.markdown(skills_html, unsafe_allow_html=True)                                
+            st.markdown(skills_html, unsafe_allow_html=True)
             
+            st.markdown(skills_html, unsafe_allow_html=True) 
+            
+            # st.subheader("❌ Missing Skills")
+
+            # for skill in missing_skills:
+            #     st.markdown(f"- ⚠️ **{skill.title()}**")
+
             st.subheader("❌ Missing Skills")
 
             gaps_html = " ".join(
                 [
-                    f"<span style='background:#8A2BE2;color:white;padding:8px 14px;border-radius:20px;font-weight:600;margin:4px;display:inline-block;'>⚠️ {skill.title()}</span>"
+                    f"<span style='background:#ffe5e5; color:#b00020; padding:6px 12px; border-radius:20px; margin:4px; display:inline-block;'>⚠️ {skill.title()}</span>"
                     for skill in missing_skills
                 ]
             )
 
             st.markdown(gaps_html, unsafe_allow_html=True)
 
+
             # st.subheader("💪 Candidate Strengths")
 
             # for skill in matched_skills:
             #     st.success(skill)
 
-            # st.subheader("💪 Candidate Strengths")
+            st.subheader("💪 Candidate Strengths")
 
-            # strengths_html = " ".join(
-            #     [
-            #         f"<span style='background:#E3F2FD;color:#1565C0;padding:8px 14px;border-radius:20px;font-weight:600;margin:4px;display:inline-block;'>💪 {skill.title()}</span>"
-            #         for skill in matched_skills
-            #     ]
-            # )
+            strengths_html = " ".join(
+                [
+                    f"<span style='background:#E3F2FD;color:#1565C0;padding:8px 14px;border-radius:20px;font-weight:600;margin:4px;display:inline-block;'>💪 {skill.title()}</span>"
+                    for skill in matched_skills
+                ]
+            )
 
-            # st.markdown(strengths_html, unsafe_allow_html=True)
+            st.markdown(strengths_html, unsafe_allow_html=True)
 
-            # st.subheader("⚠️ Skill Gaps")
+            st.subheader("⚠️ Skill Gaps")
 
-            # for skill in missing_skills:
-            #     st.warning(skill)
+            for skill in missing_skills:
+                st.warning(skill)
 
             st.subheader("🎤 AI Interview Questions")
             for i, question in enumerate(questions, start=1):
@@ -172,29 +164,27 @@ with tab1:
 
             st.subheader("📊 Executive Candidate Scorecard")
 
-            col1, col2, col3, col4 = st.columns(4)
+            col1, col2 = st.columns(2)
 
             with col1:
                 st.metric(
-                    "🎯 Match Score",
+                    "Match Score",
                     f"{score}%"
+                )
+
+                st.metric(
+                    "Matched Skills",
+                    len(matched_skills)
                 )
 
             with col2:
                 st.metric(
-                    "✅ Skills",
-                    len(matched_skills)
+                   "Missing Skills",
+                   len(missing_skills)
                 )
 
-            with col3:
                 st.metric(
-                    "⚠️ Missing",
-                    len(missing_skills)
-                )
-
-            with col4:
-                st.metric(
-                    "🏆 Rating",
+                    "Recommendation",
                     recommendation
                 )
 
