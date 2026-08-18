@@ -27,3 +27,6 @@ reports/*
 .idea/
 .DS_Store
 Thumbs.db
+
+# Local application backups
+app_backup*.py
