@@ -172,13 +172,13 @@ footer {
 
 [data-testid="stMetricLabel"] {
     color: #58D3FF !important;
-    font-size: 16px !important;
+    font-size: 12px !important;
     font-weight: 600 !important;
 }
 
 [data-testid="stMetricValue"] {
     color: #FFFFFF !important;
-    font-size: 38px !important;
+    font-size: 24px !important;
     font-weight: 700 !important;
 }
 
@@ -186,125 +186,66 @@ footer {
     color: #00D084 !important;
 }
 
+/* Smaller Enterprise Font Sizes */
+
+p,
+span,
+label {
+    font-size: 13px !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
-# st.markdown("""
-# <style>
-
-# @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-
-# html, body, [class*="css"] {
-#     font-family: 'Poppins', sans-serif;
-# }
-
-# .main-header {
-#     background: linear-gradient(
-#         90deg,
-#         #FF6A2B,
-#         #FF3D72,
-#         #FF00B8
-#     );
-#     padding: 25px;
-#     border-radius: 15px;
-#     text-align: center;
-#     color: white;
-# }
-
-# </style>
-# """, unsafe_allow_html=True)
-
-
-
-# st.title("🤖 TalentCopilot AI")
-
-# st.markdown("""
-# <div class="main-header">
-#     <h1>🤖 TalentCopilot AI</h1>
-#     <p>AI Powered Resume Screening & Interview Assistant</p>
-# </div>
-# """, unsafe_allow_html=True)
-
-# st.markdown("""
-# <div style="
-# background:#062247;
-# padding:20px 30px;
-# border-radius:20px;
-# margin-bottom:20px;
-# border:1px solid #1E4E7A;
-# ">
-
-# <h1 style="
-# color:white;
-# font-size:36px;
-# margin-bottom:10px;
-# ">
-# TalentCopilot AI
-# </h1>
-
-# <p style="
-# color:#58D3FF;
-# font-size:18px;
-# font-weight:600;
-# margin-bottom:10px;
-# ">
-# Enterprise Recruitment Intelligence Platform
-# </p>
-
-# <p style="
-# color:#AFC4DE;
-# font-size:14px;
-# ">
-# AI Resume Screening • AI Voice Interview • Executive Insights
-# </p>
-
-# </div>
-# """, unsafe_allow_html=True)
 
 st.markdown("""
 <div style="
-background:#062247;
-padding:15px 30px;
-border-radius:18px;
-margin-bottom:15px;
+background:linear-gradient(135deg,#0D2548,#123B70);
+# background:linear-gradient(135deg,#062247,#0B3D91);
+# background:linear-gradient(135deg,#0A1931,#185ADB);
+# background:linear-gradient(135deg,#0B2B54,#174A84);
+padding:18px;
+border-radius:14px;
+margin-bottom:10px;
 border:1px solid #1E4E7A;
+text-align:center;
 ">
 
 <div style="
 font-size:12px;
 color:#58D3FF;
-letter-spacing:3px;
+letter-spacing:5px;
 font-weight:700;
-margin-bottom:8px;
+margin-bottom:2px;
 ">
 TALENTCOPILOTAI
 </div>
 
-<h1 style="
+<div style="
 color:white;
-font-size:30px;
-margin:0;
+font-size:48px;
+font-weight:700;
+line-height:1.0;
+margin-bottom:5px;
 ">
-TalentCopilot AI
-</h1>
+🤖 TalentCopilot AI
+</div>
 
-<p style="
+<div style="
 color:#58D3FF;
 font-size:16px;
 font-weight:600;
-margin-top:5px;
-margin-bottom:5px;
+margin-bottom:4px;
 ">
 Enterprise Recruitment Intelligence Platform
-</p>
+</div>
 
-<p style="
-color:#AFC4DE;
-font-size:14px;
-margin:0;
+<div style="
+color:#B5C8DF;
+font-size:12px;
 ">
 AI Resume Screening • AI Voice Interview • Executive Insights
-</p>
+</div>
 
 </div>
 """, unsafe_allow_html=True)
@@ -330,7 +271,7 @@ with tab1:
 
     job_description = st.text_area(
         "Paste Job Description",
-        height=250
+        height=100
     )
 
     if uploaded_resume:
@@ -353,10 +294,83 @@ with tab1:
 
             recommendation = evaluate_candidate(score)
 
+            if score >= 85:
+                banner_color = "#00D084"
+
+            elif score >= 70:
+                banner_color = "#F5A623"
+
+            else:
+                banner_color = "#E53935"
+
             questions = generate_questions(
                 matched_skills,
                 missing_skills
             )
+
+            total_skills = (
+                len(matched_skills)
+                + len(missing_skills)
+            )
+
+            st.markdown("""
+            <div style="
+            background:#082953;
+            padding:20px;
+            border-radius:15px;
+            border:1px solid #1E4E7A;
+            margin-bottom:20px;
+            ">
+            <h2 style="
+            color:#58D3FF;
+            margin-bottom:10px;
+            ">
+            👤 Candidate Analysis Dashboard
+            </h2>
+            </div>
+            """,
+            unsafe_allow_html=True)
+
+            dash1, dash2, dash3, dash4 = st.columns(4)
+
+            with dash1:
+                st.metric(
+                    "Skills Identified",
+                    total_skills
+                )
+
+            with dash2:
+                st.metric(
+                    "Matched",
+                    len(matched_skills)
+                )
+
+            with dash3:
+                st.metric(
+                    "Missing",
+                    len(missing_skills)
+                )
+
+            with dash4:
+                st.metric(
+                    "Resume Status",
+                    "Analysed"
+                )
+
+            st.markdown(f"""
+            <div style="
+            background:{banner_color};
+            padding:15px;
+            border-radius:12px;
+            text-align:center;
+            margin-bottom:20px;
+            ">
+            <h2 style="color:white;">
+            🏆 {recommendation}
+            </h2>
+            </div>
+            """,
+            unsafe_allow_html=True)
 
             col1, col2, col3, col4 = st.columns(4)
 
@@ -365,6 +379,8 @@ with tab1:
                     "Match Score",
                     f"{score}%"
                 )
+
+            st.progress(score / 100)
 
             with col2:
                 st.metric(
@@ -417,31 +433,7 @@ with tab1:
 
             st.markdown(gaps_html, unsafe_allow_html=True)
 
-            # st.subheader("💪 Candidate Strengths")
-
-            # for skill in matched_skills:
-            #     st.success(skill)
-
-            # st.subheader("💪 Candidate Strengths")
-
-            # strengths_html = " ".join(
-            #     [
-            #         f"<span style='background:#E3F2FD;color:#1565C0;padding:8px 14px;border-radius:20px;font-weight:600;margin:4px;display:inline-block;'>💪 {skill.title()}</span>"
-            #         for skill in matched_skills
-            #     ]
-            # )
-
-            # st.markdown(strengths_html, unsafe_allow_html=True)
-
-            # st.subheader("⚠️ Skill Gaps")
-
-            # for skill in missing_skills:
-            #     st.warning(skill)
-
-            # st.subheader("🎤 AI Interview Questions")
-            # for i, question in enumerate(questions, start=1):
-            #     st.write(f"{i}. {question}")
-
+            
             st.subheader("🎤 AI Interview Questions")
 
             st.markdown("""
@@ -458,8 +450,9 @@ with tab1:
                     f"""
                     <div style="
                     color:#FFFFFF;
-                    font-size:18px;
-                    margin-bottom:15px;
+                    font-size:13px;
+                    margin-bottom:6px;
+                    line-height:1.3;
                     ">
                     {i}. {question}
                     </div>
