@@ -317,7 +317,7 @@ def render_interview_summary():
             st.write(item["question"])
 
             st.markdown("**Candidate response**")
-
+            
             st.write(item["answer"])
 
             word_count = len(item["answer"].split())
@@ -331,77 +331,96 @@ def render_interview_summary():
                 f"Response length: {word_count} words"
             )
 
-    # LOOP ENDS HERE
+            average_score = round(
+                total_score / len(answers),
+                1
+            )
 
-    average_score = round(
-        total_score / len(answers),
-        1
-    )
-    
-    st.markdown("## 📊 Interview Assessment")
+            st.markdown("## 📊 Interview Assessment")
 
-    col1, col2, col3 = st.columns(3)
-    
-    with col2:
+            col1, col2, col3 = st.columns(3)
+
+            with col1:
+                st.metric(
+                    "Interview Score",
+                    f"{average_score}/10"
+                )
+
+            with col2:
+                st.metric(
+                    "Questions Answered",
+                    len(answers)
+                )
+
+            with col3:
+                st.metric(
+                    "Status",
+                    "Completed"
+                )
+
+        st.markdown("---")
+
         st.metric(
-            "Questions Answered",
-            len(answers)
+            "Overall Interview Score",
+            f"{average_score}/10"
         )
 
-    with col3:
-        st.metric(
-            "Status",
-            "Completed"
+        st.markdown("### 🎯 Hiring Recommendation")
+
+        if average_score >= 8:
+            st.success(
+                "✅ Strongly Recommended"
+            )
+
+        elif average_score >= 6:
+            st.warning(
+                "🟡 Recommended for Further Assessment"
+            )
+
+        else:
+            st.error(
+                "❌ Requires Additional Evaluation"
+            )
+
+        st.markdown("### 💪 Strengths")
+
+        strengths = []
+
+        all_answers = " ".join(
+            [item["answer"].lower() for item in answers]
         )
 
-    st.markdown("---")
+        if "kubernetes" in all_answers:
+            strengths.append("Kubernetes")
 
-    st.metric(
-        "Overall Interview Score",
-        f"{average_score}/10"
-    )
+        if "aws" in all_answers:
+            strengths.append("AWS")
 
-    st.markdown("### 🎯 Hiring Recommendation")
+        if "terraform" in all_answers:
+            strengths.append("Terraform")
 
-    if average_score >= 8:
-        st.success(
-            "✅ Strongly Recommended"
+        if "automation" in all_answers:
+            strengths.append("Automation")
+
+        for skill in strengths:
+            st.success(f"✅ {skill}")
+
+        if average_score >= 8:
+            st.success(
+                "Strong interview performance."
+            )
+
+        elif average_score >= 6:
+            st.warning(
+                "Moderate interview performance."
+            )
+
+        else:
+            st.error(
+                "Interview responses require further assessment."
+            )
+
+        st.info(
+            "This transcript is evidence for authorised human review. "
+            "The system does not independently select or reject a candidate."
         )
-
-    elif average_score >= 6:
-        st.warning(
-            "🟡 Recommended for Further Assessment"
-        )
-
-    else:
-        st.error(
-            "❌ Requires Additional Evaluation"
-        )
-
-    st.markdown("### 💪 Strengths")
-
-    strengths = []
-
-    all_answers = " ".join(
-        [item["answer"].lower() for item in answers]
-    )
-
-    if "kubernetes" in all_answers:
-        strengths.append("Kubernetes")
-
-    if "aws" in all_answers:
-        strengths.append("AWS")
-
-    if "terraform" in all_answers:
-        strengths.append("Terraform")
-
-    if "automation" in all_answers:
-        strengths.append("Automation")
-
-    for skill in strengths:
-        st.success(f"✅ {skill}")
-    
-    st.info(
-        "This transcript is evidence for authorised human review. "
-        "The system does not independently select or reject a candidate."
-    )

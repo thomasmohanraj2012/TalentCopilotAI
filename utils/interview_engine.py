@@ -1,27 +1,3 @@
-# def generate_questions(matched_skills, missing_skills):
-
-#     questions = []
-
-#     for skill in matched_skills[:5]:
-#         questions.append(
-#             f"Can you explain your experience with {skill}?"
-#         )
-
-#     for skill in missing_skills[:3]:
-#         questions.append(
-#             f"Have you worked with {skill}? If not, how would you learn it?"
-#         )
-
-#     questions.extend(
-#         [
-#             "Describe a challenging technical problem you solved.",
-#             "How do you handle production incidents?",
-#             "Tell us about a project you are most proud of."
-#         ]
-#     )
-
-#     return questions
-
 import random
 
 QUESTION_BANK = {
@@ -75,32 +51,139 @@ QUESTION_BANK = {
     ]
 }
 
-def generate_questions(matched_skills, missing_skills):
+def generate_questions(
+    matched_skills,
+    missing_skills,
+    resume_text,
+    job_description
+):
 
-    questions = []
+    resume_questions = []
 
-    for skill in matched_skills[:5]:
+    jd_questions = []
+
+    gap_questions = []
+
+    behavioural_questions = []
+
+    resume_text = resume_text.lower()
+
+    job_description = job_description.lower()
+
+    if "kubernetes" in job_description:
+        jd_questions.append(
+            "This role requires Kubernetes expertise. Describe the most complex Kubernetes environment you have supported."
+        )
+
+    if "aws" in job_description:
+        jd_questions.append(
+            "AWS is an important requirement for this role. Describe a production AWS workload you supported."
+        )
+
+    if "vmware" in job_description:
+        jd_questions.append(
+            "This role requires VMware experience. Describe a VMware migration or upgrade project you performed."
+        )
+
+    if "terraform" in job_description:
+        jd_questions.append(
+            "Terraform is required for this position. Explain how you design reusable Terraform modules."
+        )
+
+    if "production" in resume_text:
+        resume_questions.append(
+            "Your resume mentions production support. Describe a critical production incident you handled and how you resolved it."
+        )
+
+    if "migration" in resume_text:
+        resume_questions.append(
+            "Tell us about a migration project you worked on. What challenges did you face?"
+        )
+
+    if "automation" in resume_text:
+        resume_questions.append(
+            "Describe the most impactful automation solution you developed."
+        )
+
+    if (
+        "lead" in resume_text
+        or "manager" in resume_text
+        or "team lead" in resume_text
+        or "project lead" in resume_text
+    ):
+        resume_questions.append(
+            "Your resume indicates leadership experience. Describe a technical decision you made that significantly benefited your team or organisation."
+        )
+
+    if "vmware" in resume_text:
+        resume_questions.append(
+            "Your resume mentions VMware. Describe the largest VMware environment you managed."
+    )
+
+    if "terraform" in resume_text:
+        resume_questions.append(
+            "Your resume mentions Terraform. Explain the most reusable Terraform module you developed and how it was used."
+        )
+
+    if "aws" in resume_text:
+        resume_questions.append(
+            "Your resume mentions AWS. Describe the most complex AWS workload you supported and the challenges you encountered."
+        )
+
+    if "python" in resume_text:
+        resume_questions.append(
+            "Your resume references Python. Describe an automation solution you developed that delivered measurable business value."
+        )
+
+    if "kubernetes" in resume_text:
+        resume_questions.append(
+            "Your resume mentions Kubernetes. Describe the most critical Kubernetes outage you handled and how you resolved it."
+        )
+
+    if "linux" in resume_text:
+        resume_questions.append(
+            "Your resume references Linux administration. Describe the most difficult Linux issue you diagnosed and fixed."
+        )
+
+    if "docker" in resume_text:
+        resume_questions.append(
+            "Your resume mentions Docker. Describe a containerisation project that improved deployment efficiency."
+        )
+
+    if "jenkins" in resume_text:
+        resume_questions.append(
+            "Your resume references Jenkins. Describe a CI/CD pipeline you designed or improved."
+        )
+
+    for skill in matched_skills[:2]:
 
         if skill in QUESTION_BANK:
 
-            questions.append(
+            resume_questions.append(
                 random.choice(
                     QUESTION_BANK[skill]
                 )
             )
 
-    for skill in missing_skills[:3]:
+    for skill in missing_skills[:1]:
 
-        questions.append(
-            f"You do not list {skill} experience. How would you approach learning it?"
-        )
-
-    questions.extend(
-        [
-            "Describe a challenging technical problem you solved.",
-            "How do you handle production incidents?",
-            "Tell us about a project you are most proud of."
-        ]
+        gap_questions.append(
+            f"{skill} appears to be required for this role but was not identified in your resume. How would you approach gaining competency in this area?"
     )
+
+    behavioural_questions = [
+        "Describe a challenging technical problem you solved.",
+        "Tell us about a project you are most proud of."
+    ]
+    
+    
+    questions = (
+        jd_questions[:2]
+        + resume_questions[:3]
+        + gap_questions[:1]
+        + behavioural_questions[:2]
+    )
+
+    questions = list(dict.fromkeys(questions))
 
     return questions
