@@ -1,5 +1,4 @@
 
-from utils.voice_interview import render_voice_interview
 from utils.resume_parser import extract_resume_text
 from utils.jd_matcher import calculate_match
 from utils.evaluation_engine import evaluate_candidate
@@ -12,49 +11,20 @@ st.set_page_config(
     layout="wide"
 )
 
-if "analysis_complete" not in st.session_state:
-    st.session_state.analysis_complete = False
-
 st.markdown("""
 <style>
 
 /* ---------- Fonts ---------- */
 
 html, body, [class*="css"] {
-    font-family:
-    'Segoe UI',
-    'Inter',
-    sans-serif;
-    }
+    font-family: "Sky Text", "Inter", "Segoe UI", sans-serif;
+}
 
 /* ---------- Main Background ---------- */
 
 .stApp {
-
-    background:
-
-    radial-gradient(
-        circle at top right,
-        rgba(88,211,255,0.15),
-        transparent 30%
-    ),
-
-    radial-gradient(
-        circle at bottom left,
-        rgba(17,77,142,0.35),
-        transparent 40%
-    ),
-
-    linear-gradient(
-        135deg,
-        #02152D,
-        #082953,
-        #123B70
-    );
-
-    color: white;
+    background-color: #02152D;
 }
-
 
 /* ---------- Headers ---------- */
 
@@ -71,33 +41,13 @@ h1,h2,h3,h4,h5 {
 /* ---------- Tabs ---------- */
 
 .stTabs [data-baseweb="tab"] {
-
-    color: #BFD9F5 !important;
-
-    font-size: 15px !important;
-
-    font-weight: 700;
-
-    height: 45px;
-
-    border-radius: 12px;
-
-    padding-left: 20px;
-
-    padding-right: 20px;
-
-    background: rgba(255,255,255,0.03);
+    color: #58D3FF;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 .stTabs [aria-selected="true"] {
-
-    background: rgba(88,211,255,0.15) !important;
-
-    color: white !important;
-
-    border-radius: 10px;
-
-    border-bottom: none !important;
+    border-bottom: 3px solid #58D3FF;
 }
 
 /* ---------- Buttons ---------- */
@@ -113,7 +63,8 @@ h1,h2,h3,h4,h5 {
 
 .stTextInput input,
 .stTextArea textarea {
-    background-color
+    background-color: #0D2548;
+    color: white;
 }
 
 /* ---------- Upload Box ---------- */
@@ -157,8 +108,7 @@ footer {
 
 /* Remove Top Gap */
 .block-container {
-    padding-top: 0.1rem;
-    max-width: 98%;
+    padding-top: 0.5rem;
 }
 
 /* Upload Button Styling */
@@ -179,19 +129,45 @@ footer {
     color: #AFC4DE !important;
 }
 
+# /* KPI Metrics */
+
+# [data-testid="stMetricValue"] {
+#     color: #FFFFFF !important;
+#     font-weight: 700 !important;
+# }
+
+# [data-testid="stMetricLabel"] {
+#     color: #58D3FF !important;
+#     font-size: 16px !important;
+# }
+
+# /* Enterprise Metric Cards */
+
+# [data-testid="stMetric"] {
+#     background: #082953;
+#     padding: 20px;
+#     border-radius: 15px;
+#     border: 1px solid #1E4E7A;
+# }
+
+# [data-testid="stMetricValue"] {
+#     color: #FFFFFF !important;
+#     font-size: 40px !important;
+#     font-weight: 700 !important;
+# }
+
+# [data-testid="stMetricLabel"] {
+#     color: #58D3FF !important;
+#     font-size: 16px !important;
+# }
+
 /* Executive Metric Cards */
 
 [data-testid="stMetric"] {
-
-    background: rgba(8,41,83,0.70);
-
-    backdrop-filter: blur(12px);
-
+    background: #082953;
     padding: 20px;
-
     border-radius: 15px;
-
-    border: 1px solid rgba(88,211,255,0.25);
+    border: 1px solid #1E4E7A;
 }
 
 [data-testid="stMetricLabel"] {
@@ -224,12 +200,14 @@ label {
 
 st.markdown("""
 <div style="
-background:rgba(13,37,72,0.60);
-backdrop-filter:blur(12px);
-padding:3px;
-border-radius:12px;
-margin-bottom:8px;
-border:1px solid rgba(88,211,255,0.25);
+background:linear-gradient(135deg,#0D2548,#123B70);
+# background:linear-gradient(135deg,#062247,#0B3D91);
+# background:linear-gradient(135deg,#0A1931,#185ADB);
+# background:linear-gradient(135deg,#0B2B54,#174A84);
+padding:18px;
+border-radius:14px;
+margin-bottom:10px;
+border:1px solid #1E4E7A;
 text-align:center;
 ">
 
@@ -240,23 +218,22 @@ letter-spacing:5px;
 font-weight:700;
 margin-bottom:2px;
 ">
-நேர்காணல்-Copilot-AI
+TALENTCOPILOTAI
 </div>
 
 <div style="
 color:white;
-font-size:15px;
+font-size:48px;
 font-weight:700;
 line-height:1.0;
 margin-bottom:5px;
-text-shadow:0 0 20px rgba(88,211,255,0.5);
 ">
-🤖 நேர்காணல்-Copilot-AI
+🤖 TalentCopilot AI
 </div>
 
 <div style="
 color:#58D3FF;
-font-size:13px;
+font-size:16px;
 font-weight:600;
 margin-bottom:4px;
 ">
@@ -273,73 +250,36 @@ AI Resume Screening • AI Voice Interview • Executive Insights
 </div>
 """, unsafe_allow_html=True)
 
+st.markdown("---")
+
 tab1, tab2, tab3 = st.tabs(
-        [
-            "📄 Resume Intelligence",
-            "🎤 AI Interview",
-            "📊 Executive Insights"
-        ]
-    )
+    [
+        "📄 Resume Intelligence",
+        "🎤 AI Interview",
+        "📊 Executive Insights"
+    ]
+)
 
+with tab1:
 
-st.markdown("""
-<h1 style="
-color:white;
-font-size:28px;
-margin-bottom:0px;
-">
-Candidate Evaluation
-</h1>
-
-<p style="
-color:#9FC1E1;
-margin-top:0px;
-margin-bottom:5px;
-font-size:15px;
-">
-Upload a resume and compare it against the job description.
-</p>
-""", unsafe_allow_html=True)
-
-left_col, right_col = st.columns([4, 1])
-
-with left_col:
-
-    job_description = st.text_area(
-        "📋 Paste Job Description",
-        height=120
-    )
-
-with right_col:
-
-    st.markdown("""
-    <div style="
-    background:rgba(13,37,72,0.60);
-    backdrop-filter:blur(12px);
-    border:1px solid rgba(88,211,255,0.25);
-    border-radius:20px;
-    padding:8px;
-    text-align:center;
-    margin-top:0px;
-    ">
-    <h4 style="color:#58D3FF;">
-    📄 Upload Resume
-    </h4>
-    </div>
-    """, unsafe_allow_html=True)
+    st.header("📄 Resume Intelligence")
 
     uploaded_resume = st.file_uploader(
         "Upload Resume",
-        type=["pdf", "docx"],
-        label_visibility="collapsed"
+        type=["pdf", "docx"]
     )
+
+    job_description = st.text_area(
+        "Paste Job Description",
+        height=100
+    )
+
     if uploaded_resume:
         st.success(
             f"Resume Uploaded: {uploaded_resume.name}"
-        )    
+        )
 
     if st.button("Analyze Candidate"):
-        st.session_state.analysis_complete = False
 
         if uploaded_resume and job_description:
 
@@ -367,14 +307,6 @@ with right_col:
                 matched_skills,
                 missing_skills
             )
-
-            st.session_state["questions"] = questions
-            st.session_state["score"] = score
-            st.session_state["matched_skills"] = matched_skills
-            st.session_state["missing_skills"] = missing_skills
-            st.session_state["recommendation"] = recommendation
-            st.session_state["resume_text"] = resume_text
-            st.session_state["analysis_complete"] = True
 
             total_skills = (
                 len(matched_skills)
@@ -501,15 +433,6 @@ with right_col:
 
             st.markdown(gaps_html, unsafe_allow_html=True)
 
-            if st.session_state.get("analysis_complete"):
-    
-                questions = st.session_state["questions"]
-                score = st.session_state["score"]
-                matched_skills = st.session_state["matched_skills"]
-                missing_skills = st.session_state["missing_skills"]
-                recommendation = st.session_state["recommendation"]
-                resume_text = st.session_state["resume_text"]
-
             
             st.subheader("🎤 AI Interview Questions")
 
@@ -536,10 +459,6 @@ with right_col:
                     """,
                     unsafe_allow_html=True
                 )
-
-            st.markdown("</div>", unsafe_allow_html=True)
-
-            st.markdown("---")                            
 
             st.markdown("</div>", unsafe_allow_html=True)
 
@@ -622,32 +541,11 @@ with right_col:
 
 with tab2:
 
-    st.markdown("""
-    <h2 style="
-    color:white;
-    margin-bottom:5px;
-    ">
-    🎤 Structured AI Interview
-    </h2>
+    st.header("🎤 AI Interview")
 
-    <p style="
-    color:#9FC1E1;
-    ">
-    Resume-driven interview questions and voice assessment.
-    </p>
-    """, unsafe_allow_html=True)
-
-    if "questions" in st.session_state:
-
-        render_voice_interview(
-            st.session_state["questions"]
-        )
-
-    else:
-
-        st.info(
-            "Analyse a candidate first to generate interview questions."
-        )
+    st.info(
+        "Interview Question Generator Coming Soon"
+    )
 
 
 with tab3:

@@ -90,14 +90,7 @@ h1,h2,h3,h4,h5 {
 }
 
 .stTabs [aria-selected="true"] {
-
-    background: rgba(88,211,255,0.15) !important;
-
-    color: white !important;
-
-    border-radius: 10px;
-
-    border-bottom: none !important;
+    border-bottom: 3px solid #58D3FF;
 }
 
 /* ---------- Buttons ---------- */
@@ -113,7 +106,8 @@ h1,h2,h3,h4,h5 {
 
 .stTextInput input,
 .stTextArea textarea {
-    background-color
+    background-color: #0D2548;
+    color: white;
 }
 
 /* ---------- Upload Box ---------- */
@@ -227,8 +221,8 @@ st.markdown("""
 background:rgba(13,37,72,0.60);
 backdrop-filter:blur(12px);
 padding:3px;
-border-radius:12px;
-margin-bottom:8px;
+border-radius:20px;
+margin-bottom:20px;
 border:1px solid rgba(88,211,255,0.25);
 text-align:center;
 ">
@@ -245,7 +239,7 @@ margin-bottom:2px;
 
 <div style="
 color:white;
-font-size:15px;
+font-size:16px;
 font-weight:700;
 line-height:1.0;
 margin-bottom:5px;
@@ -273,6 +267,187 @@ AI Resume Screening • AI Voice Interview • Executive Insights
 </div>
 """, unsafe_allow_html=True)
 
+# st.markdown("""
+# <div style="
+# background:rgba(13,37,72,0.45);
+# backdrop-filter:blur(12px);
+# border:1px solid rgba(88,211,255,0.35);
+# border-radius:20px;
+# padding:20px;
+# margin-top:15px;
+# margin-bottom:20px;
+# ">
+# </div>
+# """, unsafe_allow_html=True)
+
+# hero_left, hero_right = st.columns([2,1])
+
+# with hero_left:
+
+#     st.markdown("""
+#     <div style="
+#     background:rgba(13,37,72,0.65);
+#     padding:12px;
+#     border-radius:20px;
+#     border:1px solid rgba(88,211,255,0.35);
+#     ">
+    
+#     <div style="
+#     color:#58D3FF;
+#     font-size:14px;
+#     letter-spacing:2px;
+#     ">
+#     AI-Powered Talent Intelligence
+#     </div>
+
+#     <h1 style="
+#     color:white;
+#     font-size:58px;
+#     font-weight:700;
+#     margin-top:10px;
+#     margin-bottom:15px;
+#     ">
+#     AI-Powered Talent Intelligence
+#     </h1>
+
+#     <div style="
+#     width:120px;
+#     height:4px;
+#     background:#58D3FF;
+#     border-radius:10px;
+#     margin-top:10px;
+#     margin-bottom:15px;
+#     "></div>
+
+#     <p style="
+#     color:#B5C8DF;
+#     font-size:18px;
+#     line-height:1.6;
+#     ">
+#     Resume Screening, AI Voice Interview,
+#     Candidate Evaluation and Executive Hiring Insights.
+#     </p>
+
+#     </div>
+#     """, unsafe_allow_html=True)
+
+#     st.button(
+#     "🚀 Start Candidate Analysis",
+#     use_container_width=False
+#     )
+
+# with hero_right:
+
+#     st.markdown("""
+#     <div style="
+#     text-align:center;
+#     margin-top:0px;
+#     ">
+    
+#     <div style="
+#     font-size:50px;
+#     filter: drop-shadow(
+#         0px 0px 25px rgba(88,211,255,0.5)
+#     );
+#     ">
+#     🧠
+#     </div>
+
+#     </div>
+#     """, unsafe_allow_html=True)
+
+# st.markdown(
+#     """
+#     <h3 style="
+#     text-align:center;
+#     color:#58D3FF;
+#     margin-top:10px;
+#     ">
+#     Recruitment Workflow
+#     </h3>
+#     """,
+#     unsafe_allow_html=True
+#     )
+
+# wf1, wf2, wf3 = st.columns(3)
+
+# with wf1:
+#         st.markdown("""
+#         <div style="
+#         background:rgba(13,37,72,0.6);
+#         border:1px solid rgba(88,211,255,0.25);
+#         border-radius:16px;
+#         padding:20px;
+#         text-align:center;
+#         color:white;
+#         font-weight:600;
+#         ">
+#         📄<br><br>
+#         Resume Intelligence
+#         </div>
+#         """, unsafe_allow_html=True)
+
+# with wf2:        
+#         st.markdown("""
+#         <div style="
+#         background:rgba(13,37,72,0.6);
+#         border:1px solid rgba(88,211,255,0.25);
+#         border-radius:16px;
+#         padding:20px;
+#         text-align:center;
+#         color:white;
+#         font-weight:600;
+#         ">
+#         📄<br><br>
+#         AI Interview
+#         </div>
+#         """, unsafe_allow_html=True)
+
+# with wf3:        
+#         st.markdown("""
+#         <div style="
+#         background:rgba(13,37,72,0.6);
+#         border:1px solid rgba(88,211,255,0.25);
+#         border-radius:16px;
+#         padding:20px;
+#         text-align:center;
+#         color:white;
+#         font-weight:600;
+#         ">
+#         📄<br><br>
+#         Executive Insights
+#         </div>
+#         """, unsafe_allow_html=True)
+
+# st.markdown("""
+# <div style="
+# background:rgba(13,37,72,0.75);
+# border:1px solid rgba(88,211,255,0.25);
+# border-radius:15px;
+# padding:15px;
+# margin-bottom:15px;
+# ">
+
+# <h2 style="
+# color:white;
+# margin:0;
+# font-size:24px;
+# ">
+# 🧠 TalentCopilotAI
+# </h2>
+
+# <p style="
+# color:#58D3FF;
+# margin:5px 0 0 0;
+# font-size:14px;
+# ">
+# Resume Intelligence • AI Interview • Executive Insights
+# </p>
+
+# </div>
+# """, unsafe_allow_html=True)
+
+
 tab1, tab2, tab3 = st.tabs(
         [
             "📄 Resume Intelligence",
@@ -283,13 +458,12 @@ tab1, tab2, tab3 = st.tabs(
 
 
 st.markdown("""
-<h1 style="
+<h2 style="
 color:white;
-font-size:28px;
 margin-bottom:0px;
 ">
 Candidate Evaluation
-</h1>
+</h2>
 
 <p style="
 color:#9FC1E1;
@@ -301,38 +475,38 @@ Upload a resume and compare it against the job description.
 </p>
 """, unsafe_allow_html=True)
 
-left_col, right_col = st.columns([4, 1])
+left_col, right_col = st.columns([5, 1])
 
 with left_col:
 
     job_description = st.text_area(
         "📋 Paste Job Description",
-        height=120
+        height=220
     )
 
-with right_col:
+    with right_col:
 
-    st.markdown("""
-    <div style="
-    background:rgba(13,37,72,0.60);
-    backdrop-filter:blur(12px);
-    border:1px solid rgba(88,211,255,0.25);
-    border-radius:20px;
-    padding:8px;
-    text-align:center;
-    margin-top:0px;
-    ">
-    <h4 style="color:#58D3FF;">
-    📄 Upload Resume
-    </h4>
-    </div>
-    """, unsafe_allow_html=True)
+        st.markdown("""
+        <div style="
+        background:rgba(13,37,72,0.60);
+        backdrop-filter:blur(12px);
+        border:1px solid rgba(88,211,255,0.25);
+        border-radius:20px;
+        padding:8px;
+        text-align:center;
+        margin-top:0px;
+        ">
+        <h4 style="color:#58D3FF;">
+        📄 Upload Resume
+        </h4>
+        </div>
+        """, unsafe_allow_html=True)
 
-    uploaded_resume = st.file_uploader(
-        "Upload Resume",
-        type=["pdf", "docx"],
-        label_visibility="collapsed"
-    )
+        uploaded_resume = st.file_uploader(
+            "Upload Resume",
+            type=["pdf", "docx"],
+            label_visibility="collapsed"
+        )
     if uploaded_resume:
         st.success(
             f"Resume Uploaded: {uploaded_resume.name}"
@@ -539,7 +713,13 @@ with right_col:
 
             st.markdown("</div>", unsafe_allow_html=True)
 
-            st.markdown("---")                            
+            st.markdown("---")
+
+            st.write("Analysis State:",
+                st.session_state.get("analysis_complete"))
+
+            st.write("Questions:",
+                len(st.session_state.get("questions", [])))                  
 
             st.markdown("</div>", unsafe_allow_html=True)
 
@@ -622,20 +802,7 @@ with right_col:
 
 with tab2:
 
-    st.markdown("""
-    <h2 style="
-    color:white;
-    margin-bottom:5px;
-    ">
-    🎤 Structured AI Interview
-    </h2>
-
-    <p style="
-    color:#9FC1E1;
-    ">
-    Resume-driven interview questions and voice assessment.
-    </p>
-    """, unsafe_allow_html=True)
+    st.header("🎤 AI Interview")
 
     if "questions" in st.session_state:
 
