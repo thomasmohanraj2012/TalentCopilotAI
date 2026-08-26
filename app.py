@@ -1,4 +1,4 @@
-
+from engines.resume_engine import analyse_candidate
 from utils.voice_interview import render_voice_interview
 from utils.resume_parser import extract_resume_text
 from utils.jd_matcher import calculate_match
@@ -281,52 +281,53 @@ tab1, tab2, tab3 = st.tabs(
         ]
     )
 
-
-st.markdown("""
-<h1 style="
-color:white;
-font-size:28px;
-margin-bottom:0px;
-">
-Candidate Evaluation
-</h1>
-
-<p style="
-color:#9FC1E1;
-margin-top:0px;
-margin-bottom:5px;
-font-size:15px;
-">
-Upload a resume and compare it against the job description.
-</p>
-""", unsafe_allow_html=True)
-
-left_col, right_col = st.columns([4, 1])
-
-with left_col:
-
-    job_description = st.text_area(
-        "📋 Paste Job Description",
-        height=120
-    )
-
-with right_col:
+with tab1:
 
     st.markdown("""
-    <div style="
-    background:rgba(13,37,72,0.60);
-    backdrop-filter:blur(12px);
-    border:1px solid rgba(88,211,255,0.25);
-    border-radius:20px;
-    padding:8px;
-    text-align:center;
-    margin-top:0px;
+    <h1 style="
+    color:white;
+    font-size:28px;
+    margin-bottom:0px;
     ">
-    <h4 style="color:#58D3FF;">
-    📄 Upload Resume
-    </h4>
-    </div>
+    Candidate Evaluation
+    </h1>
+
+    <p style="
+    color:#9FC1E1;
+    margin-top:0px;
+    margin-bottom:5px;
+    font-size:15px;
+    ">
+    Upload a resume and compare it against the job description.
+    </p>
     """, unsafe_allow_html=True)
+
+    left_col, right_col = st.columns([3, 2])
+
+    with left_col:
+
+        job_description = st.text_area(
+            "📋 Paste Job Description",
+            height=120
+        )
+
+    with right_col:
+
+        st.markdown("""
+        <div style="
+        background:rgba(13,37,72,0.60);
+        backdrop-filter:blur(12px);
+        border:1px solid rgba(88,211,255,0.25);
+        border-radius:20px;
+        padding:8px;
+        text-align:center;
+        margin-top:0px;
+        ">
+        <h4 style="color:#58D3FF;">
+        📄 Upload Resume
+        </h4>
+        </div>
+        """, unsafe_allow_html=True)
 
     uploaded_resume = st.file_uploader(
         "Upload Resume",
@@ -338,21 +339,32 @@ with right_col:
             f"Resume Uploaded: {uploaded_resume.name}"
         )    
 
-    if st.button("Analyze Candidate"):
+    analyse_clicked = st.button(
+    "Analyze Candidate"
+    )
+
+    if analyse_clicked:
+
+        # st.write("DEBUG: Button clicked")
+
         st.session_state.analysis_complete = False
 
         if uploaded_resume and job_description:
 
-            resume_text = extract_resume_text(
-                uploaded_resume
-            )
-
-            score, matched_skills, missing_skills = calculate_match(
-                resume_text,
+            analysis = analyse_candidate(
+                uploaded_resume,
                 job_description
             )
 
-            recommendation = evaluate_candidate(score)
+            resume_text = analysis["resume_text"]
+
+            score = analysis["score"]
+
+            matched_skills = analysis["matched_skills"]
+
+            missing_skills = analysis["missing_skills"]
+
+            recommendation = analysis["recommendation"]
 
             if score >= 85:
                 banner_color = "#00D084"
