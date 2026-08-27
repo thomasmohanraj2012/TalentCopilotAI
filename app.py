@@ -5,14 +5,16 @@ from utils.jd_matcher import calculate_match
 from utils.evaluation_engine import evaluate_candidate
 from utils.interview_engine import generate_questions
 import streamlit as st
-st.title("🤖 TalentCopilotAI")
-st.write("Use the navigation menu on the left.")
 
 st.set_page_config(
     page_title="TalentCopilot AI",
     page_icon="🤖",
     layout="wide"
 )
+
+st.title("🤖 TalentCopilotAI")
+
+st.write("Use the navigation menu on the left.")
 
 if "analysis_complete" not in st.session_state:
     st.session_state.analysis_complete = False
@@ -166,15 +168,15 @@ h1,h2,h3,h4,h5 {
     display: none;
 }
 
-/* Hide Streamlit Header */
-header[data-testid="stHeader"] {
-    display: none;
-}
+# /* Hide Streamlit Header */
+# header[data-testid="stHeader"] {
+#     display: none;
+# }
 
-/* Hide Hamburger Menu */
-#MainMenu {
-    visibility: hidden;
-}
+# /* Hide Hamburger Menu */
+# #MainMenu {
+#     visibility: hidden;
+# }
 
 /* Hide Footer */
 footer {
