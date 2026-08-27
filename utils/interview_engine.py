@@ -51,6 +51,30 @@ QUESTION_BANK = {
     ]
 }
 
+KUBERNETES_JD_QUESTIONS = [
+
+    "Describe the most complex Kubernetes environment you have supported.",
+
+    "Tell us about a Kubernetes outage you resolved.",
+
+    "How do you monitor and troubleshoot Kubernetes clusters?",
+
+    "Describe a Kubernetes deployment strategy you implemented."
+
+]
+
+VMWARE_JD_QUESTIONS = [
+
+    "Describe a VMware migration or upgrade project you performed.",
+
+    "Explain the largest VMware environment you managed.",
+
+    "Tell us about a VMware performance issue you resolved.",
+
+    "Describe your VMware capacity planning approach."
+
+]
+
 def generate_questions(
     matched_skills,
     missing_skills,
@@ -71,8 +95,11 @@ def generate_questions(
     job_description = job_description.lower()
 
     if "kubernetes" in job_description:
+
         jd_questions.append(
-            "This role requires Kubernetes expertise. Describe the most complex Kubernetes environment you have supported."
+            random.choice(
+                KUBERNETES_JD_QUESTIONS
+            )
         )
 
     if "aws" in job_description:
@@ -81,8 +108,11 @@ def generate_questions(
         )
 
     if "vmware" in job_description:
+
         jd_questions.append(
-            "This role requires VMware experience. Describe a VMware migration or upgrade project you performed."
+            random.choice(
+                VMWARE_JD_QUESTIONS
+            )
         )
 
     if "terraform" in job_description:
@@ -171,11 +201,30 @@ def generate_questions(
             f"{skill} appears to be required for this role but was not identified in your resume. How would you approach gaining competency in this area?"
     )
 
-    behavioural_questions = [
-        "Describe a challenging technical problem you solved.",
-        "Tell us about a project you are most proud of."
-    ]
-    
+    BEHAVIOURAL_QUESTIONS = [
+
+    "Describe a challenging technical problem you solved.",
+
+    "Tell us about a project you are most proud of.",
+
+    "Describe a situation where you had to learn a new technology quickly.",
+
+    "Tell us about a production issue that taught you an important lesson.",
+
+    "Describe a time when a project did not go as planned.",
+
+    "Tell us about the most difficult stakeholder you worked with.",
+
+    "Describe a technical decision you would make differently today."
+
+]
+
+    behavioural_questions = random.sample(
+        BEHAVIOURAL_QUESTIONS,
+        2
+    )    
+
+    random.shuffle(resume_questions)
     
     questions = (
         jd_questions[:2]
@@ -185,5 +234,9 @@ def generate_questions(
     )
 
     questions = list(dict.fromkeys(questions))
+
+    random.shuffle(
+        questions
+    )
 
     return questions
