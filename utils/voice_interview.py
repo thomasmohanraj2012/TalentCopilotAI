@@ -398,8 +398,66 @@ def render_interview_summary():
     if "automation" in all_answers:
         strengths.append("Automation")
 
-    for skill in strengths:
-        st.success(f"✅ {skill}")
+    if strengths:
+        for skill in strengths:
+            st.success(f"✅ {skill}")
+    else:
+        st.info(
+            "No specific strengths detected from interview responses."
+        )
+
+    st.markdown("### ⚠️ Development Areas")
+
+    development_areas = []
+
+    # Score-based observations
+    if average_score < 6:
+        development_areas.append(
+            "Technical Depth"
+        )
+
+    if average_score < 5:
+        development_areas.append(
+            "Problem Solving Examples"
+        )
+
+    if average_score < 4:
+        development_areas.append(
+            "Interview Communication"
+        )
+
+    # Question-based observations
+    for item in answers:
+
+        question_text = item["question"].lower()
+
+        if "virtualization" in question_text:
+            development_areas.append(
+                "Virtualization"
+            )
+
+        if "vmware" in question_text:
+            development_areas.append(
+                "VMware Experience"
+            )
+
+        if "leadership" in question_text:
+            development_areas.append(
+                "Leadership Examples"
+            )
+
+    # Remove duplicates
+    development_areas = list(
+        dict.fromkeys(
+            development_areas
+        )
+    )
+
+    # Display
+    for area in development_areas:
+        st.warning(
+            f"⚠️ {area}"
+        )
     
     st.info(
         "This transcript is evidence for authorised human review. "

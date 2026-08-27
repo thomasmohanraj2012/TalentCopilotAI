@@ -721,8 +721,101 @@ with tab2:
 
 with tab3:
 
-    st.header("📊 Executive Scorecard")
+    st.header("📊 Executive Insights")
 
-    st.info(
-        "Candidate Evaluation Dashboard Coming Soon"
-    )
+    if not st.session_state.get(
+        "analysis_complete"
+    ):
+        st.info(
+            "Analyse a candidate first."
+        )
+
+    else:
+
+        score = (
+            st.session_state["score"]
+        )
+
+        matched_skills = (
+            st.session_state["matched_skills"]
+        )
+
+        missing_skills = (
+            st.session_state["missing_skills"]
+        )
+
+        recommendation = (
+            st.session_state["recommendation"]
+        )
+
+        col1, col2, col3, col4 = st.columns(4)
+
+        with col1:
+            st.metric(
+                "Match Score",
+                f"{score}%"
+            )
+
+        with col2:
+            st.metric(
+                "Matched Skills",
+                len(matched_skills)
+            )
+
+        with col3:
+            st.metric(
+                "Skill Gaps",
+                len(missing_skills)
+            )
+
+        with col4:
+            st.metric(
+                "Recommendation",
+                recommendation
+            )
+
+        st.progress(
+            score / 100
+        )
+
+        st.subheader(
+            "📋 Executive Summary"
+        )
+
+        if score >= 85:
+
+            st.success(
+                "Candidate demonstrates strong alignment with the job requirements."
+            )
+
+        elif score >= 70:
+
+            st.warning(
+                "Candidate has good potential and should proceed to technical evaluation."
+            )
+
+        else:
+
+            st.error(
+                "Candidate currently lacks several key skills required for the role."
+            )
+
+        st.subheader(
+            "✅ Matched Skills"
+        )
+
+        for skill in matched_skills:
+
+            st.success(
+                f"✅ {skill}"
+            )
+
+        st.subheader(
+            "⚠️ Missing Skills"
+        )
+
+        for skill in missing_skills:
+
+            st.warning(
+                f"⚠️ {skill}"
+            )
