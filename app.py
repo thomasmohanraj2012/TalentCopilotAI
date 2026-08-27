@@ -111,17 +111,41 @@ h1,h2,h3,h4,h5 {
 
 /* ---------- Input Boxes ---------- */
 
-.stTextInput input,
+# .stTextArea textarea {
+
+#     background-color: #0D2548 !important;
+
+#     color: #FFFFFF !important;
+
+#     font-size: 14px !important;
+
+#     border: 1px solid #58D3FF !important;
+# }
+
 .stTextArea textarea {
-    background-color
+
+    background-color: rgba(13,37,72,0.85) !important;
+
+    color: white !important;
+
+    border-radius: 10px !important;
+
+    border: 1px solid rgba(88,211,255,0.30) !important;
+}
+
+.stTextArea textarea::placeholder {
+
+    color: #AFC4DE !important;
+
+    opacity: 1 !important;
 }
 
 /* ---------- Upload Box ---------- */
 
 [data-testid="stFileUploader"] {
     background-color: #0D2548;
-    border-radius: 12px;
-    padding: 20px;
+    border-radius: 8px;
+    padding: 2px;
 }
 
 /* ---------- Cards ---------- */
@@ -302,48 +326,55 @@ with tab1:
     </p>
     """, unsafe_allow_html=True)
 
-    left_col, right_col = st.columns([3, 2])
+    
+    # Upload Resume Header
 
-    with left_col:
+st.markdown("""
+<div style="
+margin-bottom:2px;
+">
+<span style="
+color:#58D3FF;
+font-size:14px;
+font-weight:600;
+">
+📄 Upload Resume
+</span>
+</div>
+""", unsafe_allow_html=True)
 
-        job_description = st.text_area(
-            "📋 Paste Job Description",
-            height=120
-        )
 
-    with right_col:
+# Upload Resume
 
-        st.markdown("""
-        <div style="
-        background:rgba(13,37,72,0.60);
-        backdrop-filter:blur(12px);
-        border:1px solid rgba(88,211,255,0.25);
-        border-radius:20px;
-        padding:8px;
-        text-align:center;
-        margin-top:0px;
-        ">
-        <h4 style="color:#58D3FF;">
-        📄 Upload Resume
-        </h4>
-        </div>
-        """, unsafe_allow_html=True)
+uploaded_resume = st.file_uploader(
+    "Upload Resume",
+    type=["pdf", "docx"],
+    label_visibility="collapsed"
+)
 
-    uploaded_resume = st.file_uploader(
-        "Upload Resume",
-        type=["pdf", "docx"],
-        label_visibility="collapsed"
-    )
-    if uploaded_resume:
-        st.success(
-            f"Resume Uploaded: {uploaded_resume.name}"
-        )    
 
-    analyse_clicked = st.button(
-    "Analyze Candidate"
+if uploaded_resume:
+    st.success(
+        f"Resume Uploaded: {uploaded_resume.name}"
     )
 
-    if analyse_clicked:
+
+# Job Description BELOW Upload
+
+job_description = st.text_area(
+    "📋 Paste Job Description",
+    height=60
+)
+
+
+# Analyze Button
+
+analyse_clicked = st.button(
+    "Analyze Candidate",
+    use_container_width=True
+)
+
+if analyse_clicked:
 
         # st.write("DEBUG: Button clicked")
 
@@ -377,9 +408,11 @@ with tab1:
 
             questions = generate_questions(
                 matched_skills,
-                missing_skills
+                missing_skills,
+                resume_text,
+                job_description
             )
-
+            
             st.session_state["questions"] = questions
             st.session_state["score"] = score
             st.session_state["matched_skills"] = matched_skills
@@ -410,6 +443,26 @@ with tab1:
             </div>
             """,
             unsafe_allow_html=True)
+
+            info1, info2, info3 = st.columns(3)
+
+            with info1:
+                st.metric(
+                    "Technical Fit",
+                    f"{score}%"
+                )
+
+            with info2:
+                st.metric(
+                    "Matched Skills",
+                    len(matched_skills)
+                )
+
+            with info3:
+                st.metric(
+                    "Skill Gaps",
+                    len(missing_skills)
+                )
 
             dash1, dash2, dash3, dash4 = st.columns(4)
 
