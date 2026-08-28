@@ -12,9 +12,56 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("🤖 TalentCopilotAI")
+st.markdown(
+    """
+    <style>
+        [data-testid="stHeader"] {
+            display:none;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
-st.write("Use the navigation menu on the left.")
+st.markdown("""
+<div style="
+background:rgba(13,37,72,0.60);
+backdrop-filter:blur(12px);
+padding:20px;
+border-radius:16px;
+border:1px solid rgba(88,211,255,0.25);
+text-align:center;
+margin-bottom:20px;
+">
+
+<div style="
+font-size:14px;
+color:#58D3FF;
+font-weight:700;
+letter-spacing:3px;
+">
+TALENTCOPILOTAI
+</div>
+
+<div style="
+color:white;
+font-size:34px;
+font-weight:700;
+margin-top:8px;
+">
+🤖 Comcast - திறன்
+</div>
+
+<div style="
+color:#B5C8DF;
+font-size:15px;
+margin-top:10px;
+">
+AI Resume Screening • AI Interview Intelligence • Executive Hiring Insights
+</div>
+
+</div>
+""", unsafe_allow_html=True)
 
 if "analysis_complete" not in st.session_state:
     st.session_state.analysis_complete = False
@@ -59,6 +106,9 @@ html, body, [class*="css"] {
     color: white;
 }
 
+section.main > div {
+    padding-top: 0rem !important;
+}
 
 /* ---------- Headers ---------- */
 
@@ -147,9 +197,33 @@ h1,h2,h3,h4,h5 {
 /* ---------- Upload Box ---------- */
 
 [data-testid="stFileUploader"] {
-    background-color: #0D2548;
-    border-radius: 8px;
-    padding: 2px;
+
+    background-color: rgba(13,37,72,0.85);
+
+    border-radius: 12px;
+
+    padding: 6px;
+
+    border: 1px solid rgba(88,211,255,0.30);
+
+    max-width: 280px;
+}
+
+[data-testid="stFileUploader"] section {
+    padding: 0rem !important;
+}
+
+[data-testid="stFileUploaderDropzone"] {
+    min-height: 50px !important;
+    padding: 0.2rem !important;
+}
+
+[data-testid="stFileUploaderDropzone"] div {
+    padding: 0px !important;
+}
+
+[data-testid="stFileUploaderDropzoneInstructions"] {
+    display: none !important;
 }
 
 /* ---------- Cards ---------- */
@@ -168,10 +242,10 @@ h1,h2,h3,h4,h5 {
     display: none;
 }
 
-# /* Hide Streamlit Header */
-# header[data-testid="stHeader"] {
-#     display: none;
-# }
+/* Hide Streamlit Header */
+header[data-testid="stHeader"] {
+    display: none;
+}
 
 # /* Hide Hamburger Menu */
 # #MainMenu {
@@ -185,17 +259,26 @@ footer {
 
 /* Remove Top Gap */
 .block-container {
-    padding-top: 0.1rem;
+    padding-top: 0rem !important;
+    margin-top: 0rem !important;
     max-width: 98%;
 }
 
 /* Upload Button Styling */
 
 [data-testid="stFileUploader"] button {
+
     background-color: #58D3FF !important;
+
     color: #02152D !important;
-    font-weight: 600 !important;
+
+    font-weight: 700 !important;
+
     border: none !important;
+
+    border-radius: 10px !important;
+
+    padding: 8px 18px !important;
 }
 
 [data-testid="stFileUploader"] button:hover {
@@ -250,56 +333,56 @@ label {
 """, unsafe_allow_html=True)
 
 
-st.markdown("""
-<div style="
-background:rgba(13,37,72,0.60);
-backdrop-filter:blur(12px);
-padding:3px;
-border-radius:12px;
-margin-bottom:8px;
-border:1px solid rgba(88,211,255,0.25);
-text-align:center;
-">
+# st.markdown("""
+# <div style="
+# background:rgba(13,37,72,0.60);
+# backdrop-filter:blur(12px);
+# padding:3px;
+# border-radius:12px;
+# margin-bottom:8px;
+# border:1px solid rgba(88,211,255,0.25);
+# text-align:center;
+# ">
 
-<div style="
-font-size:12px;
-color:#58D3FF;
-letter-spacing:5px;
-font-weight:700;
-margin-bottom:2px;
-">
-நேர்காணல்-Copilot-AI
-</div>
+# <div style="
+# font-size:12px;
+# color:#58D3FF;
+# letter-spacing:5px;
+# font-weight:700;
+# margin-bottom:2px;
+# ">
+# நேர்காணல்-Copilot-AI
+# </div>
 
-<div style="
-color:white;
-font-size:15px;
-font-weight:700;
-line-height:1.0;
-margin-bottom:5px;
-text-shadow:0 0 20px rgba(88,211,255,0.5);
-">
-🤖 நேர்காணல்-Copilot-AI
-</div>
+# <div style="
+# color:white;
+# font-size:15px;
+# font-weight:700;
+# line-height:1.0;
+# margin-bottom:5px;
+# text-shadow:0 0 20px rgba(88,211,255,0.5);
+# ">
+# 🤖 நேர்காணல்-Copilot-AI
+# </div>
 
-<div style="
-color:#58D3FF;
-font-size:13px;
-font-weight:600;
-margin-bottom:4px;
-">
-Enterprise Recruitment Intelligence Platform
-</div>
+# <div style="
+# color:#58D3FF;
+# font-size:13px;
+# font-weight:600;
+# margin-bottom:4px;
+# ">
+# Enterprise Recruitment Intelligence Platform
+# </div>
 
-<div style="
-color:#B5C8DF;
-font-size:12px;
-">
-AI Resume Screening • AI Voice Interview • Executive Insights
-</div>
+# <div style="
+# color:#B5C8DF;
+# font-size:12px;
+# ">
+# AI Resume Screening • AI Voice Interview • Executive Insights
+# </div>
 
-</div>
-""", unsafe_allow_html=True)
+# </div>
+# """, unsafe_allow_html=True)
 
 tab1, tab2, tab3 = st.tabs(
         [
@@ -309,73 +392,112 @@ tab1, tab2, tab3 = st.tabs(
         ]
     )
 
-with tab1:
+# with tab1:
 
-    st.markdown("""
-    <h1 style="
-    color:white;
-    font-size:28px;
-    margin-bottom:0px;
-    ">
-    Candidate Evaluation
-    </h1>
+#     st.markdown("""
+# <div style="
+#     background:rgba(8,41,83,0.65);
+#     backdrop-filter:blur(12px);
+#     padding:25px;
+#     border-radius:18px;
+#     border:1px solid rgba(88,211,255,0.25);
+#     margin-bottom:20px;
+# ">
 
-    <p style="
-    color:#9FC1E1;
-    margin-top:0px;
-    margin-bottom:5px;
-    font-size:15px;
-    ">
-    Upload a resume and compare it against the job description.
-    </p>
-    """, unsafe_allow_html=True)
+#     <div style="
+#         color:#58D3FF;
+#         font-size:13px;
+#         font-weight:700;
+#         letter-spacing:2px;
+#     ">
+#         TALENTCOPILOTAI
+#     </div>
+
+#     <div style="
+#         color:white;
+#         font-size:32px;
+#         font-weight:700;
+#         margin-top:6px;
+#     ">
+#         Candidate Intelligence Platform
+#     </div>
+
+#     <div style="
+#         color:#B5C8DF;
+#         font-size:15px;
+#         margin-top:8px;
+#     ">
+#         AI-Powered Resume Screening, Interview Intelligence and Executive Hiring Insights
+#     </div>
+
+# </div>
+# """, unsafe_allow_html=True)
 
     
     # Upload Resume Header
 
-st.markdown("""
-<div style="
-margin-bottom:2px;
-">
-<span style="
-color:#58D3FF;
-font-size:14px;
-font-weight:600;
-">
-📄 Upload Resume
-</span>
-</div>
-""", unsafe_allow_html=True)
+# st.markdown("""
+# <div style="
+# margin-bottom:2px;
+# ">
+# <span style="
+# color:#58D3FF;
+# font-size:14px;
+# font-weight:600;
+# ">
+# 📄 Upload Resume
+# </span>
+# </div>
+# """, unsafe_allow_html=True)
 
 
 # Upload Resume
 
-uploaded_resume = st.file_uploader(
-    "Upload Resume",
-    type=["pdf", "docx"],
-    label_visibility="collapsed"
-)
+left_col, right_col = st.columns([1, 2])
 
+with left_col:
 
-if uploaded_resume:
-    st.success(
-        f"Resume Uploaded: {uploaded_resume.name}"
+    st.markdown("""
+    <div style="
+    margin-bottom:2px;
+    ">
+    <span style="
+    color:#58D3FF;
+    font-size:14px;
+    font-weight:600;
+    ">
+    📄 Upload Resume
+    </span>
+    </div>
+    """, unsafe_allow_html=True)
+
+    uploaded_resume = st.file_uploader(
+        "Upload Resume",
+        type=["pdf", "docx"],
+        label_visibility="collapsed"
     )
 
+    if uploaded_resume:
+        st.success(
+            f"✅ {uploaded_resume.name}"
+        )
 
-# Job Description BELOW Upload
+with right_col:
 
-job_description = st.text_area(
-    "📋 Paste Job Description",
-    height=60
-)
+    job_description = st.text_area(
+        "📋 Paste Job Description",
+        height=80
+    )
 
 
 # Analyze Button
 
+st.markdown("<br>", unsafe_allow_html=True)
+
 analyse_clicked = st.button(
-    "Analyze Candidate",
-    use_container_width=True
+    "🚀 Analyze Candidate",
+    use_container_width=True,
+    type="primary"
 )
 
 if analyse_clicked:
@@ -747,6 +869,58 @@ with tab3:
         recommendation = (
             st.session_state["recommendation"]
         )
+
+        hero_colour = "#00D084"
+
+        if score < 85:
+            hero_colour = "#F5A623"
+
+        if score < 70:
+            hero_colour = "#E53935"
+
+        st.markdown(
+            f"""
+            <div style="
+                background:{hero_colour};
+                padding:30px;
+                border-radius:20px;
+                text-align:center;
+                margin-bottom:25px;
+                box-shadow:0 0 25px rgba(0,0,0,0.25);
+            ">
+
+                <div style="
+                    color:white;
+                    font-size:18px;
+                    font-weight:600;
+                ">
+                    Candidate Assessment
+                </div>
+
+                <div style="
+                    color:white;
+                    font-size:64px;
+                    font-weight:800;
+                    line-height:1;
+                    margin-top:10px;
+                ">
+                    {score}%
+                </div>
+
+                <div style="
+                    color:white;
+                    font-size:22px;
+                    font-weight:700;
+                    margin-top:10px;
+                ">
+                    {recommendation}
+                </div>
+
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
 
         col1, col2, col3, col4 = st.columns(4)
 
