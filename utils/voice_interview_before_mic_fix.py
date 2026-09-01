@@ -1,80 +1,6 @@
-import io
-
-import speech_recognition as sr
 import streamlit as st
-
-from streamlit_mic_recorder import mic_recorder
+from streamlit_mic_recorder import speech_to_text
 from utils.answer_evaluator import evaluate_answer
-
-def transcribe_recording(audio):
-    """
-    Convert WAV recording bytes to text.
-
-    Returns:
-        str: Recognised text.
-        None: When recognition is unsuccessful.
-    """
-
-    if not audio:
-        return None
-
-    audio_bytes = audio.get("bytes")
-
-    if not audio_bytes:
-        st.warning(
-            "The recording did not contain audio data. "
-            "Please record the answer again."
-        )
-        return None
-
-    recognizer = sr.Recognizer()
-
-    try:
-        wav_file = io.BytesIO(audio_bytes)
-
-        with sr.AudioFile(wav_file) as source:
-            audio_data = recognizer.record(source)
-
-        recognised_text = recognizer.recognize_google(
-            audio_data,
-            language="en-IN"
-        )
-
-        recognised_text = recognised_text.strip()
-
-        if not recognised_text:
-            st.warning(
-                "The recording was captured, but no speech was recognised."
-            )
-            return None
-
-        return recognised_text
-
-    except sr.UnknownValueError:
-        st.warning(
-            "The recording was captured, but the speech could not "
-            "be understood. Please speak clearly and try again."
-        )
-
-    except sr.RequestError as error:
-        st.error(
-            "The recording was captured, but the speech-recognition "
-            f"service could not be reached: {error}"
-        )
-
-    except (ValueError, EOFError) as error:
-        st.error(
-            "The recorded audio could not be read as a WAV file: "
-            f"{error}"
-        )
-
-    except Exception as error:
-        st.error(
-            "The recording was captured, but transcription failed: "
-            f"{type(error).__name__}: {error}"
-        )
-
-    return None
 
 def initialise_voice_interview(questions):
     """
@@ -103,17 +29,7 @@ def reset_voice_interview(questions):
     st.session_state.voice_question_index = 0
     st.session_state.voice_answers = []
     st.session_state.voice_interview_complete = False
-
-    keys_to_remove = [
-        key
-        for key in list(st.session_state.keys())
-        if key.startswith("voice_transcript_")
-        or key.startswith("voice_recorder_")
-        or key.startswith("reviewed_answer_")
-    ]
-
-    for key in keys_to_remove:
-        del st.session_state[key]
+    st.session_state.voice_current_transcript = ""
 
     st.rerun()
 
@@ -205,221 +121,31 @@ def render_voice_interview(questions):
 
     speak_question(current_question, current_index)
 
-    # st.markdown("#### 🎙️ Record your answer")
-
-    # if "voice_current_transcript" not in st.session_state:
-    #     st.session_state.voice_current_transcript = ""
-
-    # transcript = None
-
-    # audio = mic_recorder(
-    #     start_prompt="🎙️ Start Recording",
-    #     stop_prompt="⏹️ Stop Recording",
-    #     just_once=True,
-    #     use_container_width=True,
-    #     format="wav",
-    #     key=f"voice_recorder_{current_index}"
-    # )
-
-    # if audio:
-
-    #     st.success(
-    #         "✅ Recording captured successfully."
-    #     )
-
-    #     st.audio(
-    #         audio["bytes"],
-    #         format="audio/wav"
-    #     )
-
-    #     with st.spinner(
-    #         "Converting the recording to text..."
-    #     ):
-    #         transcript = transcribe_recording(
-    #             audio
-    #         )
-
-    #     if transcript:
-
-    #         st.session_state.voice_current_transcript = transcript
-
-    #         st.success(
-    #             "✅ Transcript generated successfully."
-    #         )
-
-    #         st.write("DEBUG TRANSCRIPT:")
-    #         st.code(repr(transcript))
-
-    # st.markdown("#### 📝 Review your transcript")
-
-    # textarea_key = f"reviewed_answer_{current_index}"
-
-    # if transcript:
-
-    #     st.session_state.voice_current_transcript = transcript
-
-    #     textarea_key = (
-    #         f"reviewed_answer_{current_index}"
-    #     )
-
-    #     st.session_state[textarea_key] = transcript
-
-    #     st.success(
-    #         "✅ Transcript generated successfully."
-    #     )
-
-    #     st.write("DEBUG TRANSCRIPT:")
-    #     st.code(repr(transcript))
-
-    #     st.rerun()
-
-    # st.markdown("#### 🎙️ Record your answer")
-
-    # transcript_key = f"voice_transcript_{current_index}"
-    # recorder_key = f"voice_recorder_{current_index}"
-
-    # if transcript_key not in st.session_state:
-    #     st.session_state[transcript_key] = ""
-
-    # audio = mic_recorder(
-    #     start_prompt="🎙️ Start Recording",
-    #     stop_prompt="⏹️ Stop Recording",
-    #     just_once=True,
-    #     use_container_width=True,
-    #     format="wav",
-    #     key=recorder_key
-    # )
-
-    # if audio is not None:
-
-    #     audio_bytes = audio.get("bytes")
-
-    #     if audio_bytes:
-
-    #         st.success(
-    #             "✅ Recording captured successfully."
-    #         )
-
-    #         st.audio(
-    #             audio_bytes,
-    #             format="audio/wav"
-    #         )
-
-    #         with st.spinner(
-    #             "Converting the recording to text..."
-    #         ):
-    #             recognised_text = transcribe_recording(
-    #                 audio
-    #             )
-
-    #         if recognised_text:
-
-    #             st.session_state[
-    #                 transcript_key
-    #             ] = recognised_text
-
-    #             st.success(
-    #                 "✅ Transcript generated successfully."
-    #             )
-
-    #     else:
-    #         st.warning(
-    #             "No audio data was received. "
-    #             "Please record the answer again."
-    #         )
-
-    # st.markdown("#### 📝 Review your transcript")
-
-    # reviewed_answer = st.text_area(
-    #     "Correct any speech-recognition errors before submitting:",
-    #     height=140,
-    #     key=transcript_key,
-    #     placeholder=(
-    #         "The transcript will appear here after recording. "
-    #         "You can also type the answer manually."
-    #     )
-    # )
-
-    # if not reviewed_answer.strip():
-    #     st.caption(
-    #         "Record an answer above or type the answer manually."
-    #     )
-
     st.markdown("#### 🎙️ Record your answer")
 
-    transcript_key = f"voice_transcript_{current_index}"
-    recorder_key = f"voice_recorder_{current_index}"
-
-    if transcript_key not in st.session_state:
-        st.session_state[transcript_key] = ""
-
-    audio = mic_recorder(
+    transcript = speech_to_text(
+        language="en",
         start_prompt="🎙️ Start Recording",
         stop_prompt="⏹️ Stop Recording",
         just_once=True,
         use_container_width=True,
-        format="wav",
-        key=recorder_key
-    )
+        key=f"voice_answer_{current_index}"
+    )    
 
-    if audio is not None:
+    if transcript:
+        st.session_state.voice_current_transcript = transcript
 
-        audio_bytes = audio.get("bytes")
-
-        if audio_bytes:
-
-            st.success(
-                "✅ Recording captured successfully."
-            )
-
-            st.audio(
-                audio_bytes,
-                format="audio/wav"
-            )
-
-            with st.spinner(
-                "Converting the recording to text..."
-            ):
-                recognised_text = transcribe_recording(
-                    audio
-                )
-
-            if recognised_text:
-
-                st.session_state[transcript_key] = recognised_text
-
-                st.success(
-                    "✅ Transcript generated successfully."
-                )
-
-                st.info(
-                    f"Transcript stored: {recognised_text}"
-                )
-
-                st.rerun()
-
-        else:
-            st.warning(
-                "No audio data was received. "
-                "Please record the answer again."
-            )
+    if "voice_current_transcript" not in st.session_state:
+        st.session_state.voice_current_transcript = ""
 
     st.markdown("#### 📝 Review your transcript")
 
     reviewed_answer = st.text_area(
         "Correct any speech-recognition errors before submitting:",
+        value=st.session_state.voice_current_transcript,
         height=140,
-        key=transcript_key,
-        placeholder=(
-            "The transcript will appear here after recording. "
-            "You can also type the answer manually."
-        )
+        key=f"reviewed_answer_{current_index}"
     )
-
-    if not reviewed_answer.strip():
-        st.caption(
-            "Record an answer above or type the answer manually."
-        )
 
     button_col1, button_col2, button_col3 = st.columns(3)
 
@@ -457,7 +183,7 @@ def render_voice_interview(questions):
             if save_voice_answer(current_question, reviewed_answer):
                 if current_index < total_questions - 1:
                     st.session_state.voice_question_index += 1
-                    # st.session_state.voice_current_transcript = ""
+                    st.session_state.voice_current_transcript = ""
                 else:
                     st.session_state.voice_interview_complete = True
 

@@ -41,3 +41,6 @@ urllib3==2.7.0
 uvicorn==0.52.0
 watchdog==6.0.0
 websockets==16.1.1
+streamlit
+streamlit-mic-recorder==0.0.8
+SpeechRecognition==3.17.0

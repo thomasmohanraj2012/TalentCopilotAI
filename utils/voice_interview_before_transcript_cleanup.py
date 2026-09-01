@@ -273,78 +273,6 @@ def render_voice_interview(questions):
 
     #     st.rerun()
 
-    # st.markdown("#### 🎙️ Record your answer")
-
-    # transcript_key = f"voice_transcript_{current_index}"
-    # recorder_key = f"voice_recorder_{current_index}"
-
-    # if transcript_key not in st.session_state:
-    #     st.session_state[transcript_key] = ""
-
-    # audio = mic_recorder(
-    #     start_prompt="🎙️ Start Recording",
-    #     stop_prompt="⏹️ Stop Recording",
-    #     just_once=True,
-    #     use_container_width=True,
-    #     format="wav",
-    #     key=recorder_key
-    # )
-
-    # if audio is not None:
-
-    #     audio_bytes = audio.get("bytes")
-
-    #     if audio_bytes:
-
-    #         st.success(
-    #             "✅ Recording captured successfully."
-    #         )
-
-    #         st.audio(
-    #             audio_bytes,
-    #             format="audio/wav"
-    #         )
-
-    #         with st.spinner(
-    #             "Converting the recording to text..."
-    #         ):
-    #             recognised_text = transcribe_recording(
-    #                 audio
-    #             )
-
-    #         if recognised_text:
-
-    #             st.session_state[
-    #                 transcript_key
-    #             ] = recognised_text
-
-    #             st.success(
-    #                 "✅ Transcript generated successfully."
-    #             )
-
-    #     else:
-    #         st.warning(
-    #             "No audio data was received. "
-    #             "Please record the answer again."
-    #         )
-
-    # st.markdown("#### 📝 Review your transcript")
-
-    # reviewed_answer = st.text_area(
-    #     "Correct any speech-recognition errors before submitting:",
-    #     height=140,
-    #     key=transcript_key,
-    #     placeholder=(
-    #         "The transcript will appear here after recording. "
-    #         "You can also type the answer manually."
-    #     )
-    # )
-
-    # if not reviewed_answer.strip():
-    #     st.caption(
-    #         "Record an answer above or type the answer manually."
-    #     )
-
     st.markdown("#### 🎙️ Record your answer")
 
     transcript_key = f"voice_transcript_{current_index}"
@@ -386,17 +314,13 @@ def render_voice_interview(questions):
 
             if recognised_text:
 
-                st.session_state[transcript_key] = recognised_text
+                st.session_state[
+                    transcript_key
+                ] = recognised_text
 
                 st.success(
                     "✅ Transcript generated successfully."
                 )
-
-                st.info(
-                    f"Transcript stored: {recognised_text}"
-                )
-
-                st.rerun()
 
         else:
             st.warning(
