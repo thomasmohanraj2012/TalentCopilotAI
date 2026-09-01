@@ -590,31 +590,31 @@ if analyse_clicked:
                     len(missing_skills)
                 )
 
-            # dash1, dash2, dash3, dash4 = st.columns(4)
+            dash1, dash2, dash3, dash4 = st.columns(4)
 
-            # with dash1:
-            #     st.metric(
-            #         "Skills Identified",
-            #         total_skills
-            #     )
+            with dash1:
+                st.metric(
+                    "Skills Identified",
+                    total_skills
+                )
 
-            # with dash2:
-            #     st.metric(
-            #         "Matched",
-            #         len(matched_skills)
-            #     )
+            with dash2:
+                st.metric(
+                    "Matched",
+                    len(matched_skills)
+                )
 
-            # with dash3:
-            #     st.metric(
-            #         "Missing",
-            #         len(missing_skills)
-            #     )
+            with dash3:
+                st.metric(
+                    "Missing",
+                    len(missing_skills)
+                )
 
-            # with dash4:
-            #     st.metric(
-            #         "Resume Status",
-            #         "Analysed"
-            #     )
+            with dash4:
+                st.metric(
+                    "Resume Status",
+                    "Analysed"
+                )
 
             st.markdown(f"""
             <div style="
@@ -631,44 +631,44 @@ if analyse_clicked:
             """,
             unsafe_allow_html=True)
 
-            # col1, col2, col3, col4 = st.columns(4)
+            col1, col2, col3, col4 = st.columns(4)
 
-            # with col1:
-            #     st.metric(
-            #         "Match Score",
-            #         f"{score}%"
-            #     )
+            with col1:
+                st.metric(
+                    "Match Score",
+                    f"{score}%"
+                )
 
             st.progress(score / 100)
 
-            # with col2:
-            #     st.metric(
-            #         "Recommendation",
-            #         recommendation
-            #     )
+            with col2:
+                st.metric(
+                    "Recommendation",
+                    recommendation
+                )
 
             st.markdown("---")
             # st.header("📊 Executive Candidate Scorecard")\
 
-            # st.markdown("""
-            # <h2 style="
-            # color:white;
-            # font-size:28px;
-            # margin-top:20px;
-            # ">
-            # 📊 Executive Candidate Scorecard
-            # </h2>
-            # """, unsafe_allow_html=True)
+            st.markdown("""
+            <h2 style="
+            color:white;
+            font-size:28px;
+            margin-top:20px;
+            ">
+            📊 Executive Candidate Scorecard
+            </h2>
+            """, unsafe_allow_html=True)
 
-            # score_col1, score_col2 = st.columns(2)
+            score_col1, score_col2 = st.columns(2)
 
-            # with score_col1:
-            #     st.metric("Match Score", f"{score}%")
-            #     st.metric("Matched Skills", len(matched_skills))
+            with score_col1:
+                st.metric("Match Score", f"{score}%")
+                st.metric("Matched Skills", len(matched_skills))
 
-            # with score_col2:
-            #     st.metric("Missing Skills", len(missing_skills))
-            #     st.metric("Recommendation", recommendation)
+            with score_col2:
+                st.metric("Missing Skills", len(missing_skills))
+                st.metric("Recommendation", recommendation)
             
             st.subheader("✅ Matched Skills")
 
@@ -704,147 +704,103 @@ if analyse_clicked:
             
             st.subheader("🎤 AI Interview Questions")
 
-            # st.markdown("""
-            # <div style="
-            # background:#082953;
-            # padding:20px;
-            # border-radius:15px;
-            # border:1px solid #1E4E7A;
-            # ">
-            # """, unsafe_allow_html=True)
+            st.markdown("""
+            <div style="
+            background:#082953;
+            padding:20px;
+            border-radius:15px;
+            border:1px solid #1E4E7A;
+            ">
+            """, unsafe_allow_html=True)
 
-            # for i, question in enumerate(questions, start=1):
-            #     st.markdown(
-            #         f"""
-            #         <div style="
-            #         color:#FFFFFF;
-            #         font-size:13px;
-            #         margin-bottom:6px;
-            #         line-height:1.3;
-            #         ">
-            #         {i}. {question}
-            #         </div>
-            #         """,
-            #         unsafe_allow_html=True
-            #     )
-
-            st.subheader("🎤 Recommended Interview Questions")
-
-            st.code(repr(questions[0]))
-
-            st.subheader("🎤 Recommended Interview Questions")
-
-            st.write(questions)
-
-        for i, question in enumerate(questions, start=1):
-
-            st.markdown(
-                f"""
-                <div style="
-                    background:rgba(8,41,83,0.72);
-                    border:1px solid rgba(88,211,255,0.20);
-                    border-left:4px solid #58D3FF;
-                    border-radius:12px;
-                    padding:14px;
-                    margin-bottom:10px;
-                ">
-
+            for i, question in enumerate(questions, start=1):
+                st.markdown(
+                    f"""
                     <div style="
-                        color:#58D3FF;
-                        font-size:12px;
-                        font-weight:700;
-                        margin-bottom:6px;
+                    color:#FFFFFF;
+                    font-size:13px;
+                    margin-bottom:6px;
+                    line-height:1.3;
                     ">
-                        QUESTION {i}
+                    {i}. {question}
                     </div>
-
-                    <div style="
-                        color:#FFFFFF;
-                        font-size:15px;
-                        line-height:1.5;
-                    ">
-                        {question}
-                    </div>
-
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+                    """,
+                    unsafe_allow_html=True
+                )
 
             st.markdown("</div>", unsafe_allow_html=True)
 
             st.markdown("---")                            
 
-            # st.markdown("</div>", unsafe_allow_html=True)
+            st.markdown("</div>", unsafe_allow_html=True)
 
-            # st.markdown("---")
+            st.markdown("---")
 
-            # st.subheader("📊 Executive Candidate Scorecard")
+            st.subheader("📊 Executive Candidate Scorecard")
 
-            # col1, col2, col3, col4 = st.columns(4)
+            col1, col2, col3, col4 = st.columns(4)
 
-            # with col1:
-            #     st.metric(
-            #         "🎯 Match Score",
-            #         f"{score}%"
-            #     )
+            with col1:
+                st.metric(
+                    "🎯 Match Score",
+                    f"{score}%"
+                )
 
-            # with col2:
-            #     st.metric(
-            #         "✅ Skills",
-            #         len(matched_skills)
-            #     )
+            with col2:
+                st.metric(
+                    "✅ Skills",
+                    len(matched_skills)
+                )
 
-            # with col3:
-            #     st.metric(
-            #         "⚠️ Missing",
-            #         len(missing_skills)
-            #     )
+            with col3:
+                st.metric(
+                    "⚠️ Missing",
+                    len(missing_skills)
+                )
 
-            # with col4:
-            #     st.metric(
-            #         "🏆 Rating",
-            #         recommendation
-            #     )
+            with col4:
+                st.metric(
+                    "🏆 Rating",
+                    recommendation
+                )
 
+            st.subheader("📝 Executive Summary")
 
-            # st.subheader("📝 Executive Summary")
+            if score >= 85:
+                st.success(
+                    "Candidate demonstrates strong alignment with the job requirements and is recommended for advanced interview rounds."
+                )
 
-            # if score >= 85:
-            #     st.success(
-            #         "Candidate demonstrates strong alignment with the job requirements and is recommended for advanced interview rounds."
-            #     )
+            elif score >= 70:
+                st.warning(
+                    "Candidate shows potential but should be further assessed during technical interviews."
+                )
 
-            # elif score >= 70:
-            #     st.warning(
-            #         "Candidate shows potential but should be further assessed during technical interviews."
-            #     )
+            else:
+                st.error(
+                    "Candidate currently lacks several key skills required for this role."
+                )
 
-            # else:
-            #     st.error(
-            #         "Candidate currently lacks several key skills required for this role."
-            #     )
+            st.subheader("🎯 Hiring Decision")
 
-            # st.subheader("🎯 Hiring Decision")
+            if score >= 85:
+                st.success(
+                    "✅ Proceed to Final Interview Round"
+                )
 
-            # if score >= 85:
-            #     st.success(
-            #         "✅ Proceed to Final Interview Round"
-            #     )
+            elif score >= 70:
+                st.warning(
+                    "🟡 Proceed to Technical Assessment"
+                )
 
-            # elif score >= 70:
-            #     st.warning(
-            #         "🟡 Proceed to Technical Assessment"
-            #     )
-
-            # else:
-            #     st.error(
-            #         "❌ Screen Out Candidate"
-            #     )
+            else:
+                st.error(
+                    "❌ Screen Out Candidate"
+                )
 
             with st.expander(
-                "📄 View Extracted Resume Evidence"
-            ):
+                "Resume Text"
+                ):
                 st.write(
                     resume_text[:5000]
                 )
