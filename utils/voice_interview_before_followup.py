@@ -4,12 +4,7 @@ import speech_recognition as sr
 import streamlit as st
 
 from streamlit_mic_recorder import mic_recorder
-# from utils.answer_evaluator import evaluate_answer
-from utils.answer_evaluator import (
-    evaluate_answer,
-    evaluate_answer_score
-)
-from utils.llm_followup import generate_followup_question
+from utils.answer_evaluator import evaluate_answer
 
 def transcribe_recording(audio):
     """
@@ -115,7 +110,6 @@ def reset_voice_interview(questions):
         if key.startswith("voice_transcript_")
         or key.startswith("voice_recorder_")
         or key.startswith("reviewed_answer_")
-        or key.startswith("followup_")
     ]
 
     for key in keys_to_remove:
@@ -154,26 +148,6 @@ def save_voice_answer(question, answer):
                 break
     else:
         st.session_state.voice_answers.append(answer_record)
-
-    return True
-
-def save_followup_answer(label, question_text, answer_text):
-    """
-    Save a follow-up question and answer as additional
-    interview evidence. This does not replace or affect
-    the original saved answer.
-    """
-
-    clean_answer = answer_text.strip()
-
-    if not clean_answer:
-        return False
-
-    st.session_state.voice_answers.append({
-        "question_number": label,
-        "question": question_text,
-        "answer": clean_answer
-    })
 
     return True
 
@@ -360,74 +334,6 @@ def render_voice_interview(questions):
         ):
             reset_voice_interview(questions)
 
-        st.divider()
-
-    st.markdown("#### 🤖 AI Follow-Up (optional)")
-
-    st.caption(
-        "Generates one extra follow-up question based on the "
-        "candidate's saved answer above. This assists the "
-        "interviewer only — it does not score or decide anything."
-    )
-
-    followup_key = f"followup_question_{current_index}"
-    followup_answer_key = f"followup_answer_{current_index}"
-    followup_saved_key = f"followup_saved_{current_index}"
-
-    if st.button(
-        "🧠 Generate Follow-up Question",
-        use_container_width=True
-    ):
-        if reviewed_answer.strip():
-
-            with st.spinner("Thinking of a follow-up..."):
-                followup_text = generate_followup_question(
-                    current_question,
-                    reviewed_answer
-                )
-
-            st.session_state[followup_key] = followup_text
-
-        else:
-            st.warning(
-                "Save an answer above before generating a follow-up."
-            )
-
-    if st.session_state.get(followup_key):
-
-        st.info(st.session_state[followup_key])
-
-        followup_answer = st.text_area(
-            "Candidate's follow-up answer:",
-            height=100,
-            key=followup_answer_key
-        )
-
-        if not st.session_state.get(followup_saved_key, False):
-
-            if st.button(
-                "💾 Save Follow-up Answer",
-                use_container_width=True
-            ):
-                label = f"{current_index + 1} (Follow-up)"
-
-                if save_followup_answer(
-                    label,
-                    st.session_state[followup_key],
-                    followup_answer
-                ):
-                    st.session_state[followup_saved_key] = True
-                    st.success("Follow-up answer saved.")
-                    st.rerun()
-                else:
-                    st.warning(
-                        "Please enter a follow-up answer before saving."
-                    )
-        else:
-            st.success(
-                "✅ Follow-up already saved for this question."
-            )
-    
     if st.session_state.voice_answers:
         with st.expander("📋 Saved answers"):
             for item in st.session_state.voice_answers:
@@ -531,7 +437,7 @@ def render_interview_summary():
         return
 
     for item in answers:
-        answer_score = evaluate_answer_score(
+        answer_score = evaluate_answer(
             item["answer"]
         )
 
